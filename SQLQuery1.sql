@@ -1,8 +1,8 @@
 -- 1.A
--- Vypište produkty, které byly vdy reklamovány mui, kteøí je koupili.
--- Jinımi slovy, vypište produkty, které, kdy koupil mu, tak je i reklamoval.
--- Nevypisujte produkty, které nikdy mu nekoupil.
-/*
+-- VypiÅ¡te produkty, kterÃ© byly vÅ¾dy reklamovÃ¡ny muÅ¾i, kteÃ¸Ã­ je koupili.
+-- JinÃ½mi slovy, vypiÅ¡te produkty, kterÃ©, kdyÅ¾ koupil muÅ¾, tak je i reklamoval.
+-- Nevypisujte produkty, kterÃ© nikdy muÅ¾ nekoupil.
+
 select n.pID from test.Nakup n
  LEFT JOIN test.Reklamace r ON r.nID=n.nID
  JOIN test.Zakaznik z ON z.zID = n.zID WHERE z.pohlavi='muz'
@@ -10,9 +10,9 @@ select n.pID from test.Nakup n
  HAVING COUNT(n.nID)=SUM(CASE WHEN r.poradi IS NULL THEN 0 ELSE 1 END)
 
  -- 1.B
--- Vypište produkty, které byly vdy reklamovány enami, které je koupili.
--- Jinımi slovy, vypište produkty, které, kdy koupila ena, tak je i reklamovala.
--- Nevypisujte produkty, které nikdy ena nekoupil.
+-- VypiÅ¡te produkty, kterÃ© byly vÅ¾dy reklamovÃ¡ny Å¾enami, kterÃ© je koupili.
+-- JinÃ½mi slovy, vypiÅ¡te produkty, kterÃ©, kdyÅ¾ koupila Å¾ena, tak je i reklamovala.
+-- Nevypisujte produkty, kterÃ© nikdy Å¾ena nekoupil.
 
 SELECT n.pID from test.Nakup n
 LEFT JOIN test.Reklamace r ON r.nID = n.nID
@@ -23,7 +23,7 @@ HAVING COUNT(n.nID)= SUM(CASE WHEN r.poradi IS NULL THEN 0 ELSE 1 END)
 
 
  -- 2.A
--- Pro kadého zákazníka vypište poèet jeho nákupù, kde byla cena pod prùmìrnou cenou daného produktu.
+-- Pro kaÅ¾dÃ©ho zÃ¡kaznÃ­ka vypiÅ¡te poÃ¨et jeho nÃ¡kupÃ¹, kde byla cena pod prÃ¹mÃ¬rnou cenou danÃ©ho produktu.
 
 SELECT z.zID, z.jmeno, COUNT(n.pID) FROM test.Zakaznik z
 LEFT JOIN test.Nakup n  ON z.zID = n.zID
@@ -37,7 +37,7 @@ LEFT JOIN test.Nakup n  ON z.zID = n.zID
  
 
  -- 2.B
--- Pro kadı produkt vypište poèet jeho nákupù u kterıch byla cena pod prùmìrnou cenou daného produktu.
+-- Pro kaÅ¾dÃ½ produkt vypiÅ¡te poÃ¨et jeho nÃ¡kupÃ¹ u kterÃ½ch byla cena pod prÃ¹mÃ¬rnou cenou danÃ©ho produktu.
 SELECT p.pID, p.oznaceni, COUNT(n.pID) FROM test.Produkt p
 LEFT JOIN test.Nakup n ON n.pID = p.pID
 AND n.cena < ALL(
@@ -47,8 +47,8 @@ AND n.cena < ALL(
 GROUP BY p.pID, p.oznaceni
 
 -- 3.A
--- Vypište jméno nejvíce nakupujícího zákazníka enského pohlaví. 
--- Jinımi slovy jde nám o enu, která má mezi enami nejvyšší celkovı poèet nakoupenıch kusù zboí.
+-- VypiÅ¡te jmÃ©no nejvÃ­ce nakupujÃ­cÃ­ho zÃ¡kaznÃ­ka Å¾enskÃ©ho pohlavÃ­. 
+-- JinÃ½mi slovy jde nÃ¡m o Å¾enu, kterÃ¡ mÃ¡ mezi Å¾enami nejvyÅ¡Å¡Ã­ celkovÃ½ poÃ¨et nakoupenÃ½ch kusÃ¹ zboÅ¾Ã­.
 SELECT z.jmeno, SUM(n.kusu) FROM test.Zakaznik z
 JOIN test.Nakup n ON n.zID=z.zID WHERE z.pohlavi='zena'
  GROUP BY z.jmeno
@@ -60,8 +60,8 @@ JOIN test.Nakup n ON n.zID=z.zID WHERE z.pohlavi='zena'
  )
 
  -- 3.A
--- Vypište jméno nejvíce nakupujícího zákazníka enského pohlaví. 
--- Jinımi slovy jde nám o enu, která má mezi enami nejvyšší celkovı poèet nakoupenıch kusù zboí.
+-- VypiÅ¡te jmÃ©no nejvÃ­ce nakupujÃ­cÃ­ho zÃ¡kaznÃ­ka Å¾enskÃ©ho pohlavÃ­. 
+-- JinÃ½mi slovy jde nÃ¡m o Å¾enu, kterÃ¡ mÃ¡ mezi Å¾enami nejvyÅ¡Å¡Ã­ celkovÃ½ poÃ¨et nakoupenÃ½ch kusÃ¹ zboÅ¾Ã­.
 --asi neuznatelne
 
  SELECT TOP 1 z.jmeno, SUM(n.kusu) as pocet FROM test.Zakaznik z
@@ -81,8 +81,8 @@ ORDER BY SUM(n.kusu) desc
 
 
 -- 3.B
--- Vypište jméno nejvíce nakupujícího zákazníka, kterı si nechává zasílat reklamu. 
--- Jinımi slovy jde nám o zákazníka, kterı má nejvyšší celkovı poèet nakoupenıch kusù zboí mezi zákazníky, kteøí si nechávají zasílat reklamu.
+-- VypiÅ¡te jmÃ©no nejvÃ­ce nakupujÃ­cÃ­ho zÃ¡kaznÃ­ka, kterÃ½ si nechÃ¡vÃ¡ zasÃ­lat reklamu. 
+-- JinÃ½mi slovy jde nÃ¡m o zÃ¡kaznÃ­ka, kterÃ½ mÃ¡ nejvyÅ¡Å¡Ã­ celkovÃ½ poÃ¨et nakoupenÃ½ch kusÃ¹ zboÅ¾Ã­ mezi zÃ¡kaznÃ­ky, kteÃ¸Ã­ si nechÃ¡vajÃ­ zasÃ­lat reklamu.
 SELECT z.jmeno, SUM(n.kusu) as pocet from test.Zakaznik z
 JOIN test.Nakup n ON n.zID=z.zID WHERE z.posilat_reklamu is not null
 GROUP BY z.jmeno
@@ -91,17 +91,17 @@ HAVING SUM(n.kusu) >= ALL(
  JOIN test.Nakup n1 on n1.zID=z2.zID where z2.posilat_reklamu is not null
  GROUP BY z2.zID
 )
---Nevím zda uznatelnı kod
+--NevÃ­m zda uznatelnÃ½ kod
 SELECT TOP 1 z.jmeno, SUM(n.kusu) as pocet from test.Zakaznik z
 JOIN test.Nakup n ON n.zID=z.zID WHERE z.posilat_reklamu is not null
 GROUP BY z.jmeno
 ORDER BY SUM(n.kusu) desc
 
 
--- Ètvrtek 1.A
--- U kadého zákazníka, kterı má alespoò jeden nákup, vypište kolik reklamací má prùmìrnì na jeden nákup. 
--- Pro korektní zobrazení vısledku je potøeba poèty nákupù pøed poèítáním prùmìru pøetypovat na float s pomocí CAST(count(*) as FLOAT).
--- Vypište (zID, jmeno, prùmìr)
+-- Ãˆtvrtek 1.A
+-- U kaÅ¾dÃ©ho zÃ¡kaznÃ­ka, kterÃ½ mÃ¡ alespoÃ² jeden nÃ¡kup, vypiÅ¡te kolik reklamacÃ­ mÃ¡ prÃ¹mÃ¬rnÃ¬ na jeden nÃ¡kup. 
+-- Pro korektnÃ­ zobrazenÃ­ vÃ½sledku je potÃ¸eba poÃ¨ty nÃ¡kupÃ¹ pÃ¸ed poÃ¨Ã­tÃ¡nÃ­m prÃ¹mÃ¬ru pÃ¸etypovat na float s pomocÃ­ CAST(count(*) as FLOAT).
+-- VypiÅ¡te (zID, jmeno, prÃ¹mÃ¬r)
 SELECT zID, jmeno, avg(reklamace) as AVG_REKLAMACE from(
 SELECT n.nID,n.zID,z.jmeno, cast(count(r.nID)as float) reklamace from test.Nakup n
 JOIN test.Zakaznik z on n.zID=z.zID
@@ -112,9 +112,9 @@ group by zID, jmeno
 ORDER BY zID
 
 -- 1.B
--- U kadého produktu vypište kolik reklamací má prùmìrnì na jeden nákup. Setøiïte podle pID.
--- Pro korektní zobrazení vısledku je potøeba poèty nákupù pøetypovat s pomocí CAST(hodnota as FLOAT).
--- Vypište (pID, oznaceni, prùmìr)
+-- U kaÅ¾dÃ©ho produktu vypiÅ¡te kolik reklamacÃ­ mÃ¡ prÃ¹mÃ¬rnÃ¬ na jeden nÃ¡kup. SetÃ¸iÃ¯te podle pID.
+-- Pro korektnÃ­ zobrazenÃ­ vÃ½sledku je potÃ¸eba poÃ¨ty nÃ¡kupÃ¹ pÃ¸etypovat s pomocÃ­ CAST(hodnota as FLOAT).
+-- VypiÅ¡te (pID, oznaceni, prÃ¹mÃ¬r)
 
 SELECT pID, oznaceni, avg(reklamace) as REKLAMACE from(
  select n.nID, n.pID, p.oznaceni, cast(count(r.nID) as float) reklamace from test.Nakup n
@@ -126,7 +126,7 @@ SELECT pID, oznaceni, avg(reklamace) as REKLAMACE from(
  ORDER BY pID
 
 -- 2.A
--- Vypištì zID a jméno zákazníkù, kteøí nakoupili nejvìtší poèet kusù jednoho zboí.
+-- VypiÅ¡tÃ¬ zID a jmÃ©no zÃ¡kaznÃ­kÃ¹, kteÃ¸Ã­ nakoupili nejvÃ¬tÅ¡Ã­ poÃ¨et kusÃ¹ jednoho zboÅ¾Ã­.
 SELECT distinct z.zID, z.jmeno,n.pID, sum(n.kusu) as kusy
   FROM test.Nakup n
 JOIN test.Zakaznik z on n.zID=z.zID
@@ -139,7 +139,7 @@ having sum(n.kusu) >= all(
 )
 
 -- 2.B
--- Vypište pID a oznaèení produktù, které byly koupeny jedním zákazníkem v nejvíce kusech
+-- VypiÅ¡te pID a oznaÃ¨enÃ­ produktÃ¹, kterÃ© byly koupeny jednÃ­m zÃ¡kaznÃ­kem v nejvÃ­ce kusech
 SELECT distinct p.pID, p.oznaceni, SUM(n.kusu) as kusy
  FROM test.Nakup n
 JOIN test.Produkt p ON p.pID=n.pID 
@@ -161,8 +161,8 @@ HAVING SUM(n.kusu)>=ALL(
 )
 
 -- 3.A
--- Vypište mìsíce ve kterıch nikdy nebyl prodán vırobek znaèky `Whirpool'.
--- Mnoinu všech mìsícù je moné získat s pomocí funkce month(test.nakup.den) a tabulky test.nakup.
+-- VypiÅ¡te mÃ¬sÃ­ce ve kterÃ½ch nikdy nebyl prodÃ¡n vÃ½robek znaÃ¨ky `Whirpool'.
+-- MnoÅ¾inu vÅ¡ech mÃ¬sÃ­cÃ¹ je moÅ¾nÃ© zÃ­skat s pomocÃ­ funkce month(test.nakup.den) a tabulky test.nakup.
 
 SELECT DISTINCT MONTH(n.den) as mesic from test.Nakup n
 except
@@ -172,8 +172,8 @@ JOIN test.Produkt p on p.pID=n1.pID
 WHERE p.znacka = 'Whirpool'
 
 -- 3.B
--- Vypište mìsíce ve kterıch nikdy nebyl prodán vırobek znaèky `Green line'.
--- Mnoinu všech mìsícù je moné získat s pomocí funkce month(test.nakup.den) a tabulky test.nakup.
+-- VypiÅ¡te mÃ¬sÃ­ce ve kterÃ½ch nikdy nebyl prodÃ¡n vÃ½robek znaÃ¨ky `Green line'.
+-- MnoÅ¾inu vÅ¡ech mÃ¬sÃ­cÃ¹ je moÅ¾nÃ© zÃ­skat s pomocÃ­ funkce month(test.nakup.den) a tabulky test.nakup.
 
 SELECT DISTINCT MONTH(n.den) as mesic FROM test.Nakup n
 except
@@ -182,7 +182,7 @@ JOIN test.Produkt p on n1.pID = p.pID
 WHERE p.znacka='Green line'
 
 -- 1.A 
--- Vypište všechny produkty, které nebyly v ádném roce koupeny dvakrát.
+-- VypiÅ¡te vÅ¡echny produkty, kterÃ© nebyly v Å¾Ã¡dnÃ©m roce koupeny dvakrÃ¡t.
 
 select *
 from test.Produkt p
@@ -203,8 +203,8 @@ HAVING COUNT(p.pID)< 2
 ORDER BY p.pID
 
 -- 2.A
--- Vypište všechny produkty, které byly reklamovány za cenu vyšší ne dva tisíce korun maximálnì jednou. Vypište pID, oznaèení a poèet reklamací.
--- Eliminujte produkty, které nebyly nikdy koupeny
+-- VypiÅ¡te vÅ¡echny produkty, kterÃ© byly reklamovÃ¡ny za cenu vyÅ¡Å¡Ã­ neÅ¾ dva tisÃ­ce korun maximÃ¡lnÃ¬ jednou. VypiÅ¡te pID, oznaÃ¨enÃ­ a poÃ¨et reklamacÃ­.
+-- Eliminujte produkty, kterÃ© nebyly nikdy koupeny
 SELECT p.pID, r.cena FROM test.Zakaznik z
 JOIN test.Nakup n on n.zID=z.zID
 JOIN test.Produkt p on n.pID=p.pID
@@ -218,8 +218,8 @@ LEFT JOIN test.Reklamace r on r.nID = n.nID WHERE r.cena < 2000 or r.cena is NUL
 ORDER BY p.pID
 
 -- 2.B
--- Vypište všechny produkty, které u ni délka reklamace pøesáhla 10 dní maximálnì jednou. Vypište pID, oznaèení a poèet reklamací.
--- Eliminujte produkty, které nebyly nikdy koupeny
+-- VypiÅ¡te vÅ¡echny produkty, kterÃ© u niÅ¾ dÃ©lka reklamace pÃ¸esÃ¡hla 10 dnÃ­ maximÃ¡lnÃ¬ jednou. VypiÅ¡te pID, oznaÃ¨enÃ­ a poÃ¨et reklamacÃ­.
+-- Eliminujte produkty, kterÃ© nebyly nikdy koupeny
 
 SELECT p.pID, p.oznaceni, COUNT(r.cena) from test.Produkt p
 JOIN test.Nakup n ON n.pID=p.pID
@@ -229,8 +229,8 @@ HAVING count(r.cena)<2
 
 
 -- 3.A
--- U kadého zákazníka vypište: (1) kolik rùznıch produktù reklamoval, (2) v kolika rùznıch letech nakupoval zboí. 
--- Pro druhou hodnotu pouijte funkci YEAR(test.Nakup.den), která vrátí rok nákupu.
+-- U kaÅ¾dÃ©ho zÃ¡kaznÃ­ka vypiÅ¡te: (1) kolik rÃ¹znÃ½ch produktÃ¹ reklamoval, (2) v kolika rÃ¹znÃ½ch letech nakupoval zboÅ¾Ã­. 
+-- Pro druhou hodnotu pouÅ¾ijte funkci YEAR(test.Nakup.den), kterÃ¡ vrÃ¡tÃ­ rok nÃ¡kupu.
 SELECT z.jmeno, z.zID,
 (
  SELECT COUNT(distinct pID) as Kolik from test.Nakup n 
@@ -243,8 +243,8 @@ SELECT COUNT(distinct YEAR(n.den)) as ROKY
 ) from test.Zakaznik z
 
 -- 2.A
--- Vypište produkty, které pokud byly reklamovány, tak pouze zákazníky registrovanımi v roce 2006
--- Z vısledku odstraòte produkty, které nikdy nebyly koupeny.
+-- VypiÅ¡te produkty, kterÃ© pokud byly reklamovÃ¡ny, tak pouze zÃ¡kaznÃ­ky registrovanÃ½mi v roce 2006
+-- Z vÃ½sledku odstraÃ²te produkty, kterÃ© nikdy nebyly koupeny.
 
 SELECT distinct p.pID, p.oznaceni from test.Produkt p
  JOIN test.Nakup n on n.pID=p.pID WHERE not exists 
@@ -269,10 +269,10 @@ where not exists
 )
 
 -- 1.A
--- Vypište produkty, které byly vdy reklamovány mui, kteøí je koupili.
--- Jinımi slovy, vypište produkty, které, kdy koupil mu, tak je i reklamoval.
+-- VypiÅ¡te produkty, kterÃ© byly vÅ¾dy reklamovÃ¡ny muÅ¾i, kteÃ¸Ã­ je koupili.
+-- JinÃ½mi slovy, vypiÅ¡te produkty, kterÃ©, kdyÅ¾ koupil muÅ¾, tak je i reklamoval.
 
--- Nevypisujte produkty, které nikdy mu nekoupil.
+-- Nevypisujte produkty, kterÃ© nikdy muÅ¾ nekoupil.
 
 SELECT p.pID FROM test.Produkt p
 JOIN test.Nakup n on n.pID=p.pID
@@ -283,9 +283,9 @@ HAVING COUNT(n.kusu) = SUM(CASE WHEN r.poradi is null THEN 0 ELSE 1 END)
 
 
 -- 1.B
--- Vypište produkty, které byly vdy reklamovány enami, které je koupili.
--- Jinımi slovy, vypište produkty, které, kdy koupila ena, tak je i reklamovala.
--- Nevypisujte produkty, které nikdy ena nekoupil.
+-- VypiÅ¡te produkty, kterÃ© byly vÅ¾dy reklamovÃ¡ny Å¾enami, kterÃ© je koupili.
+-- JinÃ½mi slovy, vypiÅ¡te produkty, kterÃ©, kdyÅ¾ koupila Å¾ena, tak je i reklamovala.
+-- Nevypisujte produkty, kterÃ© nikdy Å¾ena nekoupil.
 
 SELECT  p.pID FROM test.Produkt p 
 JOIN test.Nakup n on n.pID = p.pID 
@@ -295,7 +295,7 @@ GROUP BY p.pID
 HAVING COUNT(n.kusu) = SUM(CASE WHEN r.poradi is null THEN 0 ELSE 1 END)
 
 -- 2.A
--- Pro kadého zákazníka vypište poèet jeho nákupù, kde byla cena pod prùmìrnou cenou daného produktu.
+-- Pro kaÅ¾dÃ©ho zÃ¡kaznÃ­ka vypiÅ¡te poÃ¨et jeho nÃ¡kupÃ¹, kde byla cena pod prÃ¹mÃ¬rnou cenou danÃ©ho produktu.
 
 SELECT z.zID, z.jmeno, COUNT(n.pID) FROM test.Zakaznik z
  LEFT JOIN test.Nakup n on z.zID=n.zID AND
@@ -308,7 +308,7 @@ SELECT z.zID, z.jmeno, COUNT(n.pID) FROM test.Zakaznik z
 
 
  -- 2.B
--- Pro kadı produkt vypište poèet jeho nákupù u kterıch byla cena pod prùmìrnou cenou daného produktu.
+-- Pro kaÅ¾dÃ½ produkt vypiÅ¡te poÃ¨et jeho nÃ¡kupÃ¹ u kterÃ½ch byla cena pod prÃ¹mÃ¬rnou cenou danÃ©ho produktu.
 
 SELECT p.pID, p.oznaceni, COUNT(n.pID) FROM test.Produkt p
 LEFT JOIN test.Nakup n on p.pID=n.pID AND
@@ -320,8 +320,8 @@ GROUP BY p.pID, p.oznaceni
 
 
 -- 3.A
--- Vypište jméno nejvíce nakupujícího zákazníka enského pohlaví. 
--- Jinımi slovy jde nám o enu, která má mezi enami nejvyšší celkovı poèet nakoupenıch kusù zboí.
+-- VypiÅ¡te jmÃ©no nejvÃ­ce nakupujÃ­cÃ­ho zÃ¡kaznÃ­ka Å¾enskÃ©ho pohlavÃ­. 
+-- JinÃ½mi slovy jde nÃ¡m o Å¾enu, kterÃ¡ mÃ¡ mezi Å¾enami nejvyÅ¡Å¡Ã­ celkovÃ½ poÃ¨et nakoupenÃ½ch kusÃ¹ zboÅ¾Ã­.
 
 SELECT TOP 1 z.zID, z.jmeno, z.pohlavi, SUM(n.kusu) as kusu FROM test.Nakup n
 JOIN test.Zakaznik z on z.zID = n.zID where z.pohlavi ='zena'
@@ -338,8 +338,8 @@ HAVING SUM(n.kusu)>=ALL(
 )
 
 -- 3.B
--- Vypište jméno nejvíce nakupujícího zákazníka, kterı si nechává zasílat reklamu. 
--- Jinımi slovy jde nám o zákazníka, kterı má nejvyšší celkovı poèet nakoupenıch kusù zboí mezi zákazníky, kteøí si nechávají zasílat reklamu.
+-- VypiÅ¡te jmÃ©no nejvÃ­ce nakupujÃ­cÃ­ho zÃ¡kaznÃ­ka, kterÃ½ si nechÃ¡vÃ¡ zasÃ­lat reklamu. 
+-- JinÃ½mi slovy jde nÃ¡m o zÃ¡kaznÃ­ka, kterÃ½ mÃ¡ nejvyÅ¡Å¡Ã­ celkovÃ½ poÃ¨et nakoupenÃ½ch kusÃ¹ zboÅ¾Ã­ mezi zÃ¡kaznÃ­ky, kteÃ¸Ã­ si nechÃ¡vajÃ­ zasÃ­lat reklamu.
 
 SELECT z.jmeno, SUM(n.kusu) as kusy FROM test.Nakup n
 JOIN test.Zakaznik z on z.zID=n.zID where z.posilat_reklamu is not null
@@ -351,9 +351,9 @@ HAVING SUM(n.kusu)>= ALL(
 )
 
 -- 1.A
--- U kadého zákazníka, kterı má alespoò jeden nákup, vypište kolik reklamací má prùmìrnì na jeden nákup. 
--- Pro korektní zobrazení vısledku je potøeba poèty nákupù pøed poèítáním prùmìru pøetypovat na float s pomocí CAST(count(*) as FLOAT).
--- Vypište (zID, jmeno, prùmìr)
+-- U kaÅ¾dÃ©ho zÃ¡kaznÃ­ka, kterÃ½ mÃ¡ alespoÃ² jeden nÃ¡kup, vypiÅ¡te kolik reklamacÃ­ mÃ¡ prÃ¹mÃ¬rnÃ¬ na jeden nÃ¡kup. 
+-- Pro korektnÃ­ zobrazenÃ­ vÃ½sledku je potÃ¸eba poÃ¨ty nÃ¡kupÃ¹ pÃ¸ed poÃ¨Ã­tÃ¡nÃ­m prÃ¹mÃ¬ru pÃ¸etypovat na float s pomocÃ­ CAST(count(*) as FLOAT).
+-- VypiÅ¡te (zID, jmeno, prÃ¹mÃ¬r)
 
 SELECT zID, jmeno, AVG(reklamaci)
  from (
@@ -367,9 +367,9 @@ SELECT zID, jmeno, AVG(reklamaci)
 
 
  -- 1.B
--- U kadého produktu vypište kolik reklamací má prùmìrnì na jeden nákup. Setøiïte podle pID.
--- Pro korektní zobrazení vısledku je potøeba poèty nákupù pøetypovat s pomocí CAST(hodnota as FLOAT).
--- Vypište (pID, oznaceni, prùmìr)
+-- U kaÅ¾dÃ©ho produktu vypiÅ¡te kolik reklamacÃ­ mÃ¡ prÃ¹mÃ¬rnÃ¬ na jeden nÃ¡kup. SetÃ¸iÃ¯te podle pID.
+-- Pro korektnÃ­ zobrazenÃ­ vÃ½sledku je potÃ¸eba poÃ¨ty nÃ¡kupÃ¹ pÃ¸etypovat s pomocÃ­ CAST(hodnota as FLOAT).
+-- VypiÅ¡te (pID, oznaceni, prÃ¹mÃ¬r)
 SELECT pID, oznaceni, AVG(prumer) from (
  SELECT n.nID, n.pID, p.oznaceni, CAST(COUNT(r.nID)as FLOAT) prumer FROM test.Nakup n
   JOIN test.Produkt p on p.pID=n.pID
@@ -381,7 +381,7 @@ ORDER BY pID
  
 
 -- 2.A
--- Vypištì zID a jméno zákazníkù, kteøí nakoupili nejvìtší poèet kusù jednoho zboí.
+-- VypiÅ¡tÃ¬ zID a jmÃ©no zÃ¡kaznÃ­kÃ¹, kteÃ¸Ã­ nakoupili nejvÃ¬tÅ¡Ã­ poÃ¨et kusÃ¹ jednoho zboÅ¾Ã­.
 SELECT z.zID, z.jmeno, n.pID, SUM(n.kusu) FROM test.Nakup n
 JOIN test.Zakaznik z on z.zID=n.zID
 GROUP BY z.zID, z.jmeno, n.pID
@@ -391,7 +391,7 @@ HAVING SUM(n.kusu) >=ALL(
 )
 
 -- 2.B
--- Vypište pID a oznaèení produktù, které byly koupeny jedním zákazníkem v nejvíce kusech
+-- VypiÅ¡te pID a oznaÃ¨enÃ­ produktÃ¹, kterÃ© byly koupeny jednÃ­m zÃ¡kaznÃ­kem v nejvÃ­ce kusech
 SELECT DISTINCT p.pID, p.oznaceni, SUM(n.kusu) as nej_kusu FROM test.Nakup n
 JOIN test.Produkt p on p.pID=n.pID
 GROUP BY p.pID, p.oznaceni, n.zID
@@ -403,8 +403,8 @@ HAVING SUM(n.kusu) >= ALL(
 
 
 -- 3.A
--- Vypište mìsíce ve kterıch nikdy nebyl prodán vırobek znaèky `Whirpool'.
--- Mnoinu všech mìsícù je moné získat s pomocí funkce month(test.nakup.den) a tabulky test.nakup.
+-- VypiÅ¡te mÃ¬sÃ­ce ve kterÃ½ch nikdy nebyl prodÃ¡n vÃ½robek znaÃ¨ky `Whirpool'.
+-- MnoÅ¾inu vÅ¡ech mÃ¬sÃ­cÃ¹ je moÅ¾nÃ© zÃ­skat s pomocÃ­ funkce month(test.nakup.den) a tabulky test.nakup.
 
 
 SELECT DISTINCT MONTH(n.den) as mesic FROM test.Nakup n
@@ -414,15 +414,15 @@ JOIN test.Produkt p on n1.pID=p.pID WHERE p.znacka='Whirpool'
 
 
 -- 3.B
--- Vypište mìsíce ve kterıch nikdy nebyl prodán vırobek znaèky `Green line'.
--- Mnoinu všech mìsícù je moné získat s pomocí funkce month(test.nakup.den) a tabulky test.nakup.
+-- VypiÅ¡te mÃ¬sÃ­ce ve kterÃ½ch nikdy nebyl prodÃ¡n vÃ½robek znaÃ¨ky `Green line'.
+-- MnoÅ¾inu vÅ¡ech mÃ¬sÃ­cÃ¹ je moÅ¾nÃ© zÃ­skat s pomocÃ­ funkce month(test.nakup.den) a tabulky test.nakup.
 SELECT DISTINCT MONTH(n.den) as mesic FROM test.Nakup n
 except
 SELECT DISTINCT MONTH(n1.den) as mesic FROM test.Nakup n1
 JOIN test.Produkt p on n1.pID=p.pID WHERE p.znacka='Green line'
 
 -- 1.A 
--- Vypište všechny produkty, které nebyly v ádném roce koupeny dvakrát.
+-- VypiÅ¡te vÅ¡echny produkty, kterÃ© nebyly v Å¾Ã¡dnÃ©m roce koupeny dvakrÃ¡t.
 SELECT * from test.Produkt p 
 WHERE 2 !=ALL(
 	 select count(*)
@@ -431,4 +431,4 @@ WHERE 2 !=ALL(
 	group by year(n.den)
 
 
-)*/
+)
