@@ -1,0 +1,31 @@
+/*1*/
+select n.zID,z.jmeno ,count(distinct(oznaceni)) FROM test.Produkt p
+JOIN test.Nakup n ON p.pID = n.pID
+JOIN test.Zakaznik z on z.zID=n.zID
+JOIN test.Reklamace r ON n.nID = r.nID
+where znacka = 'Whirpool' and n.zID IN(
+	select DISTINCT(n.zID) FROM test.Produkt p
+	JOIN test.Nakup n ON p.pID = n.pID
+	JOIN test.Reklamace r ON n.nID = r.nID
+	where znacka = 'Whirpool'
+	EXCEPT
+	select DISTINCT(n.zID) FROM test.Produkt p
+	JOIN test.Nakup n ON p.pID = n.pID
+	JOIN test.Reklamace r ON n.nID = r.nID
+	where znacka != 'Whirpool'
+)
+GROUP BY n.zID, z.jmeno
+
+
+/*3*/
+SELECT p.pID,p.oznaceni, COUNT(r.nID) AS pocet
+FROM test.Nakup n
+JOIN test.Produkt p ON n.pID=p.pID
+JOIN test.Reklamace r ON r.nID=n.nID
+GROUP BY p.pID,p.oznaceni
+	HAVING COUNT(r.nID)>=ALL(
+	 SELECT COUNT(r1.nID) from test.Nakup n1
+	 JOIN test.Produkt p1 on p1.pID=n1.pID
+	 JOIN test.Reklamace r1 on r1.nID=n1.nID
+	 GROUP BY p1.pID
+)
